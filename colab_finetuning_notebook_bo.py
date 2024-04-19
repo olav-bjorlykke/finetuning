@@ -18,12 +18,13 @@ Original file is located at
 
 #These two lines of code needs to be run only the first time the notebook is run in colab, to allow colab access to your files.
 
-HUGGING_FACE_ACCESS_TOKEN = os.environ.get('HUGGING_FACE_ACCESS_TOKEN')
+HUGGING_FACE_WRITE_TOKEN = os.environ.get('HUGGING_FACE_ACCESS_TOKEN')
+HUGGING_FACE_READ_TOKEN = os.environ.get('HUGGING_FACE_READ_TOKEN')
 
-if HUGGING_FACE_ACCESS_TOKEN is None:
+if HUGGING_FACE_WRITE_TOKEN is None:
     print("Token is not set.")
 else:
-    print("Token:", HUGGING_FACE_ACCESS_TOKEN)
+    print("Token:", HUGGING_FACE_WRITE_TOKEN)
 
 """### Imports"""
 
@@ -47,7 +48,7 @@ class HuggingFaceFineTuner:
         self.model_checkpoint = model_checkpoint
 
         self.model = AutoModelForSeq2SeqLM.from_pretrained(model_checkpoint)
-        self.tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, add_prefix_space=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, add_prefix_space=True, token=HUGGING_FACE_READ_TOKEN)
         self.data_collator = DataCollatorForSeq2Seq(tokenizer=self.tokenizer, model=model_checkpoint)
 
         print(self.model)
@@ -243,7 +244,7 @@ if __name__ == "__main__":
 
         hfft.perform_fine_tuning(data, test_size=0.2)
 
-        hf_token = HUGGING_FACE_ACCESS_TOKEN
+        hf_token = HUGGING_FACE_WRITE_TOKEN
         model_name = model_checkpoint.split('/')[1]
         fine_tuned_model_checkpoint = f"relu-ntnu/{model_name}_{current_version}_trained_on_{article_count}"
         hfft.push_to_huggingface_hub(fine_tuned_model_checkpoint, hf_token=hf_token)
