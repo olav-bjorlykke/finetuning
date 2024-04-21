@@ -231,7 +231,7 @@ if __name__ == "__main__":
 
     article_counts = [250, 1000, 1500]
     current_version = "v4"
-    models = ["alpindale/WizardLM-2-8x22B"]
+    models = ["meta-llama/Meta-Llama-3-8B"]
     times = {}
 
     for model_checkpoint in models:
