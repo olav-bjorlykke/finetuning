@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 from transformers import pipeline
-from transformers import AutoTokenizer, DataCollatorForSeq2Seq, AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer
+from transformers import AutoTokenizer, DataCollatorForSeq2Seq, AutoModelForSeq2SeqLM, Seq2SeqTrainingArguments, Seq2SeqTrainer, AutoModelForCausalLM
 import os
 
 import pandas as pd
@@ -47,7 +47,7 @@ class HuggingFaceFineTuner:
 
         self.model_checkpoint = model_checkpoint
 
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(model_checkpoint)
+        self.model = AutoModelForCausalLM.from_pretrained(model_checkpoint)
         self.tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, add_prefix_space=True, token=HUGGING_FACE_READ_TOKEN)
         self.data_collator = DataCollatorForSeq2Seq(tokenizer=self.tokenizer, model=model_checkpoint)
 
