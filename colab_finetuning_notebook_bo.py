@@ -47,7 +47,7 @@ class HuggingFaceFineTuner:
 
         self.model_checkpoint = model_checkpoint
 
-        self.model = AutoModelForCausalLM.from_pretrained(model_checkpoint)
+        self.model = AutoModelForCausalLM.from_pretrained(model_checkpoint, token=HUGGING_FACE_READ_TOKEN)
         self.tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, add_prefix_space=True, token=HUGGING_FACE_READ_TOKEN)
         self.data_collator = DataCollatorForSeq2Seq(tokenizer=self.tokenizer, model=model_checkpoint)
 
