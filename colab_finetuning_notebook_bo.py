@@ -231,8 +231,11 @@ if __name__ == "__main__":
 
     article_counts = [250, 1000, 1500]
     current_version = "v4"
-    models = ["meta-llama/Meta-Llama-Guard-2-8B"]
+    models = ["meta-llama/Meta-Llama-3-70B"]
     times = {}
+
+    for model in models:
+        print(model)
 
     for model_checkpoint in models:
       for article_count in article_counts:
